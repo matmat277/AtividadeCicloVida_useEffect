@@ -8,7 +8,7 @@ export default function SensorEstacionamento() {
     console.log("Distância atual:", distancia);
 
     if (distancia < 20) {
-      window.alert("⚠️ PERIGO: Muito Próximo!");
+      Alert.alert("⚠️ PERIGO: Muito Próximo!");
     }
 
     const intervalo = setInterval(() => {
@@ -22,24 +22,92 @@ export default function SensorEstacionamento() {
   }, [distancia]);
 
   return (
-    <View style={styles.container}>
-      <Text>Sensor de Estacionamento</Text>
+  <View style={styles.container}>
+    <Text style={styles.title}>Sensor de Estacionamento</Text>
 
-      <Text>Distância: {distancia} cm</Text>
+    <Text style={styles.distance}>
+      {distancia} cm
+    </Text>
 
-      <Pressable onPress={() => setDistancia(distancia + 5)}>
-        <Text>Aumentar distância</Text>
+   <Text
+  style={[
+    styles.status,
+    distancia < 20 ? styles.danger : styles.safe
+  ]}
+>
+  {distancia < 20 ? '⚠ Muito próximo!' : '✓ Distância segura'}
+</Text>
+
+    <View style={styles.buttons}>
+      <Pressable
+        style={styles.button}
+        onPress={() => setDistancia(distancia + 5)}
+      >
+        <Text style={styles.buttonText}>Aumentar</Text>
       </Pressable>
 
-      <Pressable onPress={() => setDistancia(distancia - 5)}>
-        <Text>Diminuir distância</Text>
+      <Pressable
+        style={styles.button}
+        onPress={() => setDistancia(distancia - 5)}
+      >
+        <Text style={styles.buttonText}>Diminuir</Text>
       </Pressable>
     </View>
-  );
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
     padding: 20,
+    alignItems: 'center',
   },
+
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2563EB',
+    marginTop: 30,
+    marginBottom: 40,
+  },
+
+  distance: {
+    fontSize: 56,
+    fontWeight: 'bold',
+    color: '#222222',
+    marginBottom: 10,
+  },
+
+  status: {
+    fontSize: 18,
+    color: '#16A34A',
+    marginBottom: 40,
+  },
+
+  buttons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+
+  button: {
+    backgroundColor: '#2563EB',
+    padding: 15,
+    borderRadius: 8,
+  },
+
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+  safe: {
+  color: '#16A34A',
+},
+
+danger: {
+  color: '#DC2626',
+},
 });
